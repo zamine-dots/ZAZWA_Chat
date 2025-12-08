@@ -1,8 +1,6 @@
-// src/components/Chat.tsx
 import React, { useState, useEffect, useRef } from "react";
 import { useChatStore } from "@/hooks/useChatStore";
 import ContextMenu from "./ContextMenue";
-import { Trash2 } from "lucide-react"; // Import for the new Clear Context button
 
 export default function Chat() {
   const { getActiveChat, updateChat, activeChatId } = useChatStore();
@@ -12,7 +10,6 @@ export default function Chat() {
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom when messages change
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat?.messages]);
@@ -109,17 +106,12 @@ export default function Chat() {
 
   return (
     <div className="flex flex-col h-screen w-full p-4">
-      {/* HEADER */}
-      <div className="flex justify-between items-center border-b pb-4 mb-4">
-        <h2 className="text-xl font-bold">{chat.name}</h2>
-      </div>
-
       {/* MESSAGES AREA */}
-      <div className="flex-1 overflow-y-auto space-y-4 mb-4 pr-2">
+      <div className="flex-1 overflow-y-auto space-y-2  overflow-hidden pr-2">
         {chat.messages.map((msg, idx) => (
           <div
             key={idx}
-            className={`p-3 rounded-lg max-w-[80%] ${
+            className={`p-3 rounded-lg max-w-[60%] ${
               msg.role === "user"
                 ? "bg-blue-500 text-white self-end ml-auto"
                 : "bg-gray-200 text-black self-start"
@@ -135,7 +127,7 @@ export default function Chat() {
       {/* INPUT AREA */}
       <div className="flex gap-2">
         <input
-          className="flex-1 border p-2 rounded"
+          className="flex-1 border p-2 mt-0 rounded"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
